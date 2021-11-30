@@ -1,44 +1,39 @@
 import unittest
 from DisjointSetArray import DisjointSetArray
+from DisjointSetForest import DisjointSetForest
 
 class DisjointSetTestCase(unittest.TestCase):
 
-    # def setUp(self):
-
-    # def tearDown(self):
-    def testIsEquivalent(self):
-        ds1 = DisjointSetArray(range(5))
-        ds2 = DisjointSetArray(range(5))
-        res = ds1.isEquivalent(ds2)
-        self.assertTrue(res)
+    def setUp(self):
+        # self.ds1 = DisjointSetArray(5)
+        self.ds1 = DisjointSetForest(5)
 
     def testFind(self):
-        ds1 = DisjointSetArray(range(5))
         for i in range(5):
-            self.assertEqual(ds1.find(i), i)
-
-    def testMerge(self):
-        ds1 = DisjointSetArray([0, 0, 2 ,2, 4, 5, 2, 4, 2, 2])
-        ds2 = DisjointSetArray([0, 0, 2 ,2, 4, 5, 2, 4, 2, 2])
-
-        ds1.merge(2, 3)
-        self.assertTrue(ds1.isEquivalent(ds2))
-        expected_cardinality = [2, 2, 5, 5, 2, 1, 5, 2, 5, 5]
-        for i in range(len(expected_cardinality)):
-            self.assertEqual(expected_cardinality[i], ds1.getCardinality(i))
-
-        ds3 = DisjointSetArray([0, 0, 2, 2, 2, 5, 2, 2, 2, 2])
-        ds1.merge(3, 7)
-        self.assertTrue(ds1.isEquivalent(ds3))
-        
+            self.assertEqual(self.ds1.find(i), i)
 
     def testGetCardinality(self):
-        arr      = [0, 0, 2 ,2, 4, 5, 2, 4, 2, 2]
-        expected = [2, 2, 5, 5, 2, 1, 5, 2, 5, 5]
-        ds = DisjointSetArray(arr)
-        for i in range(len(arr)):
-            self.assertEqual(ds.getCardinality(i), expected[i])
+        expected = [1, 1, 1, 1, 1]
+        for i in range(len(expected)):
+            self.assertEqual(self.ds1.getCardinality(i), expected[i])
 
+    def testMerge(self):
+        self.assertFalse(self.ds1.find(2) == self.ds1.find(3))
+        self.assertTrue(self.ds1.merge(2, 3))
+        self.assertTrue(self.ds1.find(2) == self.ds1.find(3))
+        self.assertFalse(self.ds1.merge(2, 3))
+        exp_cardinality = [1, 1, 2, 2, 1]
+        for i in range(len(exp_cardinality)):
+            self.assertEqual(exp_cardinality[i], self.ds1.getCardinality(i))
+
+    def testIsEquivalent(self):
+        for i in range(1, 5):
+            self.assertFalse(self.ds1.isEquivalent(i-1, i))
+        self.assertTrue(self.ds1.merge(2, 3))
+        self.assertTrue(self.ds1.isEquivalent(2, 3))
+
+
+    # def tearDown(self):
 
 if __name__ == '__main__':
     unittest.main()
