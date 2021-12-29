@@ -35,3 +35,29 @@ public:
         return root;
     }
 };
+
+/*  Iterative Version
+class Solution {
+public:
+    Node* connect(Node* root) {
+        
+        if(not root){ return root; }
+        
+        Node* prev=root, *curr;
+        while(prev){
+            curr = prev;
+            while(curr){
+                if(curr->left){
+                    curr->left->next = curr->right;
+                }
+                if(curr->right && curr->next){
+                    curr->right->next = curr->next->left;
+                }
+                curr = curr->next;
+            }
+            prev = prev->left;
+        }
+        return root;
+    }
+};
+*/
