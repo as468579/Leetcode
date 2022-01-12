@@ -1,3 +1,38 @@
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        
+        vector<int> prev(triangle.size(), 100000);
+        vector<int> curr(triangle.size(), 100000);
+
+        prev[0] = triangle[0][0];
+        for(int i=1; i<triangle.size(); ++i){
+            for(int j=0; j<=i; ++j){
+                if(j){
+                    curr[j] = min(prev[j-1], prev[j]) + triangle[i][j];
+                }
+                else{
+                    curr[j] = prev[j] + triangle[i][j];
+                }
+            }
+            prev = curr;
+        }
+        
+        if(curr[0] == 100000){ return prev[0]; }
+        
+        int min = INT_MAX;
+        for(int j=0; j<triangle.size(); ++j){
+            if(curr[j] < min){
+                min = curr[j];
+            }
+        }
+        return min;
+    }
+};
+
+
+/* Space Complexity: O(n^2)
 class Solution {
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
@@ -31,3 +66,4 @@ public:
         
     }
 };
+*/
