@@ -63,13 +63,13 @@ public:
 // If both sum(diff[i]), sum(diff[i] + diff[i+1]) are greater than or equal (>=) to 0, 
 // and sum(diff[i], diff[i+1], diff[i+2]) is less than (<) 0.
 // It means that i is not the legal start position at the first sec.
-// And then, we can figure out diff[i+2] < 0.
+// And then we can figure out diff[i+2] < 0.
 // Therefore, i+2 is not a legal start position.
 // Furthermore, we can find out that 
 //     1. diff[i] >= 0 
 //     2. sum(diff[i], diff[i+1]) < (-1 * diff[i+2])
 // Thus, diff[i+1] < (-1 *  diff[i+2])
-// So we knows that both i+1 and i+2 are not legal start positions
+// So we knows that i, i+1 and i+2 are not legal start positions
 // Then we move the start position to i+3
 class Solution {
 public:
